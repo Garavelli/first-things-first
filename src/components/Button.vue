@@ -1,15 +1,17 @@
 <template>
-  <button @click="this.$emit('btn-click')" :style="{background: color}">{{ text }}</button>
+  <button @click="$emit('btn-click')" :style="{background: color}">{{ text }}</button>
 </template>
 
 <script lang="ts">
-  export default {
+import { defineComponent } from "@vue/runtime-core"
+
+  export default defineComponent ({
     name: 'Button',
     props: {
       text: String,
       color: String
     }
-  } 
+  })
   
 </script>
 

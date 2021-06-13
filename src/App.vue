@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Header from './components/Header.vue'
 import Tasks from './components/Tasks.vue'
 import AddTask from './components/AddTask.vue'
@@ -23,11 +23,10 @@ export default defineComponent({
     Tasks,
     AddTask
   },
-  data() { // states
-    return {
-      tasks: Array as PropType<TaskProps[]>,
-      showAddTask: false
-    }
+  setup() {
+    const tasks = ref<TaskProps[]>([]);
+    const showAddTask = ref(false);
+    return { tasks, showAddTask };
   },
   methods: {
     deleteTask(id: number)  { 

@@ -13,20 +13,22 @@
 </template>
 
 <script lang="ts">
-import { PropType } from "vue"
-
-import { defineComponent } from "vue"
-import { TaskProps } from "../utils/types"
+  import { PropType } from "vue"
+  import { defineComponent } from "vue"
+  import { TaskProps } from "../utils/types"
   export default defineComponent({
     name: 'Task',
     props: {
-      task: Object as PropType<TaskProps>,
+      task: {
+        required: true,
+        type: Object as PropType<TaskProps>
+      }
     },
     methods: {
-      handleDelete(id) {
+      handleDelete(id: number) {
         this.$emit('delete-task', id)
       },
-      handleDblClick(id) {
+      handleDblClick(id: number) {
         this.$emit('toggle-reminder', id)
       }
     }

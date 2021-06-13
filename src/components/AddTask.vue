@@ -16,41 +16,42 @@
 </template>
 
 <script lang="ts">
+import { ref } from '@vue/reactivity';
 import {TaskProps} from '../utils/types';
+import { EmitsOptions, SetupContext } from 'vue';
 
 export default {
   name: 'AddTask',
-  data() {
-    return {
-      text: '',
-      day: '',
-      reminder: false
-    }
-  },
-  methods: {
-    handleSubmit(e: Event): void {
+  setup(props: Object, context:SetupContext<EmitsOptions>) {
+    const text = ref('');
+    const day = ref('');
+    const reminder = ref(false);
+    console.log(typeof props)
+    const handleSubmit = (e: Event): void  => {
       console.log(e)
       e.preventDefault();
       console.log('hi')
 
-      if (!this.text) {
+      if (!text) {
         alert('Please add a task');
         return;
       }
 
       const newTask: TaskProps = {
         id: Math.floor(Math.random() * 100000),
-        text: this.text,
-        day: this.day,
-        reminder: this.reminder,
-      }
-      console.log(newTask)
-      this.$emit('add-task', newTask);
+        text: text.value,
+        day: day.value,
+        reminder: reminder.value,
+      }     
 
-      this.text = '';
-      this.day = '';
-      this.reminder = false;
-    }
+      context.emit('add-task', newTask);
+
+      text.value = '';
+      day.value = '';
+      reminder.value = false;     
+    } // end handleSubmit
+
+    return { text, day, reminder, handleSubmit }
   }
 
 }
