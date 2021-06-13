@@ -1,18 +1,13 @@
 <template>
-  <button @click="handleClick()" :style="{background: color}">{{ text }}</button>
+  <button @click="this.$emit('btn-click')" :style="{background: color}">{{ text }}</button>
 </template>
 
-<script>
+<script lang="ts">
   export default {
     name: 'Button',
     props: {
       text: String,
       color: String
-    },
-    methods: {
-      handleClick() {
-        console.log("click")
-      }
     }
   } 
   
@@ -27,9 +22,10 @@
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 200ms ease-in-out;
   }
 
   button:hover {
-    filter: sepia();
+    filter: brightness(1.2);
   }
 </style>

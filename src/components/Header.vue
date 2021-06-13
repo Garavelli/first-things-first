@@ -1,24 +1,30 @@
 <template>
   <header>
     <h1>{{ title }}</h1>
-    <Button text='Add task' color="green" />
+    <Button 
+      :text="btnText = showAddTask ? 'New Task' : 'Close'" 
+      :color="btnColor = showAddTask ? 'green' : 'rgb(250, 52, 52)'" 
+      @btn-click="$emit('toggle-add-task');"
+    />
   </header>
 </template>
 
-<script>
-  import Button from './Button.vue';
-  export default {
+<script lang="ts">
+  import { defineComponent } from 'vue';
+import Button from './Button.vue';
+  export default defineComponent({
     name: 'Header',
     props: {
       title: {
         type: String,
         default: 'Hadouken'
-      }
+      },
+      showAddTask: Boolean
     },
     components: {
       Button
-    }
-  }
+    }   
+  })
 </script>
 
 <style scoped>
@@ -29,5 +35,6 @@
     align-items: center;
     justify-content: space-around;
     margin-bottom: 20px;
+    
   }
 </style>

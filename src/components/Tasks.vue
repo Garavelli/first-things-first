@@ -6,15 +6,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import Task from './Task.vue';
+  import {TaskProps} from '../utils/types'
+  import { PropType } from 'vue';
   export default {
     name: 'Tasks',
     components: {
       Task
     },
     props: {
-      tasks: Array
+      tasks: Array as PropType<TaskProps[]>
     },
     emits: ['delete-task', 'toggle-reminder']
   }
