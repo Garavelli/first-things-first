@@ -1,10 +1,17 @@
 <template>
   <div class="container">
     <Header title="Task Tracker" @toggle-add-task="toggleAddTask" :showAddTask="showAddTask" />
-    <div v-show="showAddTask">
-      <AddTask @add-task="addTask" />
+    <div v-show="showAddTask" class="addtask">
+      <AddTask @add-task=" addTask " />
     </div>
-    <Tasks @delete-task="deleteTask" @toggle-reminder="toggleReminder" :tasks="tasks"/>
+    <Ordering @change-order="handleChanging" />
+    <Tasks 
+      @delete-task="deleteTask" 
+      @toggle-reminder="toggleReminder" 
+      :tasks="tasks" 
+      :order="order" 
+    />
+    
   </div>
 </template>
 
@@ -13,7 +20,8 @@ import { defineComponent, ref } from 'vue'
 import Header from './components/Header.vue'
 import Tasks from './components/Tasks.vue'
 import AddTask from './components/AddTask.vue'
-import {TaskProps} from './utils/types';
+import {Order, TaskProps} from './utils/types';
+import Ordering from './components/Ordering.vue';
 
 
 export default defineComponent({
@@ -21,26 +29,36 @@ export default defineComponent({
   components: { // bind them components
     Header,
     Tasks,
-    AddTask
+    AddTask,
+    Ordering
   },
   setup() {
     const tasks = ref<TaskProps[]>([]);
     const showAddTask = ref(false);
-    return { tasks, showAddTask };
-  },
-  methods: {
-    deleteTask(id: number)  { 
-      this.tasks = this.tasks.filter((task: TaskProps) => task.id != id)    
-    },
-    toggleReminder(id: number) { 
-      this.tasks = this.tasks.map((task: TaskProps)=> task.id === id ? {...task, reminder: !task.reminder} : task)    
-    },
-    addTask(task: TaskProps) {
-      this.tasks = [...this.tasks, task]
-    },
-    toggleAddTask() {
-      this.showAddTask = !this.showAddTask
+    const order = ref<Order>('day');
+
+    const deleteTask = (id: number) => { 
+      tasks.value = tasks.value.filter((task: TaskProps) => task.id != id)    
     }
+    
+    const toggleReminder = (id: number) => { 
+      tasks.value = tasks.value.map((task: TaskProps)=> task.id === id ? {...task, reminder: !task.reminder} : task)    
+    }
+
+    const addTask = (task: TaskProps) => {
+      tasks.value = [...tasks.value, task]
+    }
+
+    const toggleAddTask = () => {
+      showAddTask.value = !showAddTask.value
+    }
+
+    const handleChanging = (newOrder: Order) => {
+      console.log(order)
+      order.value = newOrder;
+    }
+
+    return { tasks, showAddTask, order, deleteTask, toggleReminder, addTask, toggleAddTask, handleChanging };
   },
   created() { //useEffect
     this.tasks = [
@@ -86,11 +104,18 @@ export default defineComponent({
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 body {
   font-family: 'Karla', sans-serif;
   transition: all 200ms ease-in-out;
+}
+
+#app {  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
 }
 
 .container {
@@ -105,11 +130,10 @@ body {
   overflow: auto;
   align-items: center;
   justify-content: flex-start;
+  padding: 20px;
 }
 
-#app {  
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+.container .addtask {
+  width: 100%;
 }
 </style>

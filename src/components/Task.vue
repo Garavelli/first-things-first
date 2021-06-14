@@ -63,8 +63,9 @@
     min-height: 70px;
     cursor: pointer;
     border-radius: 5px;
-    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
     position: relative;
+    width: 100%;
   }
 
   .task h4 {
@@ -73,6 +74,6 @@
   }
 
   .task.reminder {
-    border-right-color: green;
+    border-left-color: green;
   }
 </style>

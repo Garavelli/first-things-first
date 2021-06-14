@@ -1,5 +1,5 @@
 <template>
-  <button @click="$emit('btn-click')" :style="{background: color}">{{ text }}</button>
+  <button @click="$emit('btn-click')" :style="{background: color, color: textColor}">{{ text }}</button>
 </template>
 
 <script lang="ts">
@@ -9,7 +9,11 @@ import { defineComponent } from "@vue/runtime-core"
     name: 'Button',
     props: {
       text: String,
-      color: String
+      color: String,
+      textColor: {
+        default: 'white',
+        type: String
+      }
     }
   })
   

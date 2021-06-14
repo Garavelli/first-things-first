@@ -10,7 +10,6 @@
       <label>Set reminder</label>
       <input type="checkbox" v-model="reminder" name="reminder" />
     </div>
-
     <input type="submit" value="Save Task" class="btn btn-block">
   </form>
 </template>
@@ -59,7 +58,11 @@ export default {
 
 <style scoped>
   .add-form {
-    width: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin: 10px auto;
   }
 
   .form-control {
@@ -101,12 +104,14 @@ export default {
   }
 
   input[type=submit] {
-    width: 100%;
+    width: 60%;
     color: white;
     background-color: rgb(73, 71, 71);
     padding: 10px;
     border: none;
     cursor: pointer;
+    align-self: center;
+    border-radius: 10px;
   }
   
 </style>

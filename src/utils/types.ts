@@ -4,3 +4,5 @@ export type TaskProps = {
   day: string;
   reminder: boolean
 }
+
+export type Order = 'text' | 'day' | 'reminder';
